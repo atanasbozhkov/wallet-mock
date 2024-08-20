@@ -6,8 +6,6 @@ import {
   publicActions,
   LocalAccount,
   http,
-  recoverTypedDataAddress,
-  verifyTypedData,
   toHex,
 } from "viem";
 import * as chains from "viem/chains";
@@ -113,23 +111,24 @@ export function createWallet(
           console.log(signedTypeDataParams);
           const signature =
             await localAccount.signTypedData(signedTypeDataParams);
-          const valid = await verifyTypedData({
-            address: localAccount.address,
-            domain,
-            types,
-            primaryType: 'Mail',
-            message,
-            signature,
-          });
-          console.log(`Signature valid: ${valid}`);
-          const recoveredAddress = await recoverTypedDataAddress({ 
-            domain: domain,
-            types: types,
-            primaryType: 'Mail',
-            message: message,
-            signature,
-          });
-          console.log(`Recovered Address: ${recoveredAddress}`);
+          // TODO: Add verifyTypedData and recoverTypedDataAddress - at the moment they break because params are not iterable.
+          // const valid = await verifyTypedData({
+          //   address: localAccount.address,
+          //   domain,
+          //   types,
+          //   primaryType: 'Mail',
+          //   message,
+          //   signature,
+          // });
+          // console.log(`Signature valid: ${valid}`);
+          // const recoveredAddress = await recoverTypedDataAddress({ 
+          //   domain: domain,
+          //   types: types,
+          //   primaryType: 'Mail',
+          //   message: message,
+          //   signature,
+          // });
+          // console.log(`Recovered Address: ${recoveredAddress}`);
           return signature;
         }
 
